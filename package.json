@@ -1,0 +1,30 @@
+{
+  "name": "coincheck-promise",
+  "version": "0.0.1",
+  "description": "Coincheck API helper with Promise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kiyonori-matsumoto/coincheck-promise.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "coincheck",
+    "promise"
+  ],
+  "author": "Kiyonori Matsumoto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kiyonori-matsumoto/coincheck-promise/issues"
+  },
+  "homepage": "https://github.com/kiyonori-matsumoto/coincheck-promise#readme",
+  "dependencies": {
+    "crypto": "0.0.3",
+    "moment": "^2.17.1",
+    "request-promise-native": "^1.0.3",
+    "request": "^2.34"
+  }
+}
