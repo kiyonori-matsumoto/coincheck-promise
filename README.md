@@ -3,7 +3,7 @@
 ```javascript
 const coincheck = require('coincheck-promise');
 
-coincheck.getBalance()
+coincheck.order_books()
 .then( (data) => {
   console.log(data);
 }).catch( (err) => {
@@ -21,13 +21,11 @@ key and secret are specified by following order
 ```javascript
 const coincheck = require('coincheck-promise');
 
-coincheck.sendChildOrder({
-  product_code: 'BTC_JPY',
-  child_order_type: 'LIMIT',
-  side: 'BUY',
-  price: 100000,
-  size: 0.001,
-  minute_to_expire: 30,
+coincheck.trade({
+  pair: 'btc_jpy,
+  order_type: 'buy',
+  rate: 100000,
+  amount: 0.001
 })
 .then((data) => {
   console.log(data);
@@ -39,6 +37,5 @@ coincheck.sendChildOrder({
 ## Any issues?
 please notify me on https://github.com/kiyonori-matsumoto/coincheck-promise/issues
 
-## If you like this or want to register
-https://coincheck.com/?c=9PPI2IoRhys
+## If you like this or want to register https://coincheck.com/?c=9PPI2IoRhys
 
