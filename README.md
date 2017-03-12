@@ -22,7 +22,7 @@ key and secret are specified by following order
 const coincheck = require('coincheck-promise');
 
 coincheck.trade({
-  pair: 'btc_jpy,
+  pair: 'btc_jpy',
   order_type: 'buy',
   rate: 100000,
   amount: 0.001
