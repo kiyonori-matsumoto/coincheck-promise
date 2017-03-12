@@ -34,8 +34,24 @@ coincheck.trade({
 })
 ```
 
+## Supported order
+Supported orders are currently limited to followings.
+
+### Public API
+- ticker
+- order_books
+- trades
+
+### Private API
+- trade
+- balance
+- cancelOrder
+- activeOrders
+- transactions
+
 ## Any issues?
 please notify me on https://github.com/kiyonori-matsumoto/coincheck-promise/issues
 
-## If you like this or want to register https://coincheck.com/?c=9PPI2IoRhys
+## If you like this or want to try:
+https://coincheck.com/?c=9PPI2IoRhys
 
