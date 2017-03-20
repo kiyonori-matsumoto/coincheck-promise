@@ -15,7 +15,7 @@ coincheck.order_books()
 key and secret are specified by following order
 
 1. call coincheck.setCredentials(key, secret);
-2. set Environment Variable coincheck_KEY and coincheck_SECRET
+2. set Environment Variable COINCHECK\_KEY and COINCHECK\_SECRET
 
 ## With options
 ```javascript
@@ -31,6 +31,24 @@ coincheck.trade({
   console.log(data);
 }).catch( (err) => {
   console.error(err.message);
+})
+```
+
+## Retry
+You can retry latest order.
+```javascript
+const coincheck = require('coincheck-promise');
+
+coincheck.trade({
+  pair: 'btc_jpy', 
+  order_type: 'buy',
+  rate: 100000,
+  amount: 0.001
+}).then(console.log)
+.catch( (err) => {
+  return coincheck.retry('trade')
+  .then( (d) => console.log("success"))
+  .catch( (e) => console.log("error"))
 })
 ```
 
