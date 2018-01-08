@@ -2,9 +2,12 @@
   "name": "coincheck-promise",
   "version": "0.0.4",
   "description": "Coincheck API helper with Promise",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "test_js": "mocha dist/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -22,9 +25,24 @@
   },
   "homepage": "https://github.com/kiyonori-matsumoto/coincheck-promise#readme",
   "dependencies": {
+    "async-lock": "^1.1.0",
     "crypto": "0.0.3",
     "moment": "^2.17.1",
-    "request-promise-native": "^1.0.3",
-    "request": "^2.34"
+    "request": "^2.34",
+    "request-promise-native": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/async-lock": "0.0.20",
+    "@types/chai": "^4.1.0",
+    "@types/mocha": "^2.2.46",
+    "@types/nock": "^9.1.1",
+    "@types/node": "^8.5.7",
+    "@types/qs": "^6.5.1",
+    "@types/request-promise-native": "^1.0.10",
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0",
+    "nock": "^9.1.5",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2"
   }
 }
