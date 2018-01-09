@@ -162,4 +162,43 @@ describe('Private', () => {
       })
     })
   })
+  describe('#deposit_money_history', () => {
+    it('can request', () => {
+      const res = {
+        "success": true,
+        "deposits": [
+          {
+            "id": 2,
+            "amount": "0.05",
+            "currency": "BTC",
+            "address": "13PhzoK8me3u5nHzzFD85qT9RqEWR9M4Ty",
+            "status": "confirmed",
+            "confirmed_at": "2015-06-13T08:29:18.000Z",
+            "created_at": "2015-06-13T08:22:18.000Z"
+          },
+          {
+            "id": 1,
+            "amount": "0.01",
+            "currency": "BTC",
+            "address": "13PhzoK8me3u5nHzzFD85qT9RqEWR9M4Ty",
+            "status": "received",
+            "confirmed_at": "2015-06-13T08:21:18.000Z",
+            "created_at": "2015-06-13T08:21:18.000Z"
+          }
+        ]
+      };
+
+      const spec = nock(base)
+      .get('/api/deposit_money')
+      .query({currency: 'BTC'})
+      .reply(200, res);
+
+      return p.deposit_money_history({currency: 'BTC'})
+      .then(data => {
+        expect(data).to.be.deep.equal(res);
+        expect(data.deposits[0].id === 2);
+        expect(spec.isDone()).to.be.true;
+      })
+    })
+  })
 })

@@ -17,6 +17,11 @@ export class Private {
     if (secret) this.secret = secret;
   }
 
+  public set_credential(key: string, secret: string) {
+    this.key = key;
+    this.secret = secret;
+  }
+
   public new_order(option: NewOrderRequest): Promise<NewOrderResponse> {
     return this.private_request('POST', '/api/exchange/orders', option);
   }
@@ -30,14 +35,14 @@ export class Private {
   }
 
   public trade_history() {
-    return <Promise<{transactions: TradeHistoryResponse}>>this.private_request('GET', '/api/exchange/orders/transactions');
+    return <Promise<{transactions: TradeHistoryResponse[]}>>this.private_request('GET', '/api/exchange/orders/transactions');
   }
 
   public trade_history_page(option: Pagenation) {
-   return <Promise<{data: TradeHistoryResponse, pagination: Pagenation}>>this.private_request('GET', '/api/exchange/orders/transactions_pagination', option);
+   return <Promise<{data: TradeHistoryResponse[], pagination: Pagenation}>>this.private_request('GET', '/api/exchange/orders/transactions_pagination', option);
   }
 
-  public positions(option: {status: 'open'|'closed'}): Promise<PositionsResponse> {
+  public positions(option: {status: 'open'|'closed'}): Promise<{data: PositionsResponse[]}> {
     return this.private_request('GET', '/api/exchange/leverage/positions', option)
   }
 
@@ -49,7 +54,7 @@ export class Private {
     return this.private_request('GET', '/api/accounts/leverage_balance');
   }
 
-  public send_money(option: SendMoneyRequest): Promise<SendMoneyResponse> {
+  public send_money(option: SendMoneyRequest): Promise<{sends: SendMoneyResponse[]}> {
     return this.private_request('POST', '/api/send_money', option);
   }
 
@@ -57,7 +62,7 @@ export class Private {
     return this.private_request('GET', '/api/send_money', option);
   }
 
-  public deposit_money_history(option: {currency: 'BTC'}): Promise<DepositMoneyHistoryResponse> {
+  public deposit_money_history(option: {currency: 'BTC'}): Promise<{deposits: DepositMoneyHistoryResponse[]}> {
     return this.private_request('GET', '/api/deposit_money', option);
   }
 
@@ -114,11 +119,14 @@ export class Private {
   }
 
   private private_request(method: string, path: string, query?: any): Promise<any> {
+    if (!this.key || !this.secret) {
+      return Promise.reject(new Error('key and secret must be set to use Private methods.'))
+    }
     return new Promise((resolve, reject) => {
       lock.acquire(this.key, () => {
         const timestamp = Date.now().toString();
         const query_str = (query && method === 'GET') ? `?${qs.stringify(query)}` : ''
-        const _path = Config.endpoint + path;
+        const _path = Config.endpoint + path + query_str;
         const body = (query && (method === 'POST' || method === 'PUT')) ? JSON.stringify(query): '';
         
         const text = timestamp + _path + body;
