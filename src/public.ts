@@ -1,14 +1,15 @@
 import * as rp from 'request-promise-native';
 import * as moment from 'moment';
-import {Config} from './config';
+import { Config } from './config';
+import { Pagenation } from './private';
 
 export class Public {
   public ticker(): Promise<TickerResponse> {
     return this.public_request('ticker');
   }
 
-  public trades(pair = 'btc_jpy'): Promise<TradesResponse[]> {
-    return this.public_request('trades', {pair})
+  public trades(pair = 'btc_jpy', option: Pagenation = {}): Promise<{data: TradesResponse[], pagination: Pagenation}> {
+    return this.public_request('trades', Object.assign({pair}, option))
     .then(this.handle_response_success);
   }
 
